@@ -1,5 +1,6 @@
 package com.application.search.component
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -28,6 +29,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.application.base.common.AnimatedVisibilityFade
+import com.application.base.common.Empty
 import com.application.base.common.SpacerS
 import com.application.base.common.SpacerXS
 import com.application.base.common.SpacerXXS
@@ -41,18 +44,25 @@ import com.application.domain.model.LocationWeather
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PinnedLocationList(locations: List<LocationWeather>, onClick: (LocationWeather) -> Unit) {
-    LazyColumn(contentPadding = PaddingValues(top = Paddings.xxxSmall, bottom = 120.dp)) {
-        items(locations, key = { it.location.url }) {
-            PinnedLocation(
-                modifier = Modifier
-                    .animateItemPlacement()
-                    .padding(vertical = Paddings.xxxSmall)
-                    .fillMaxWidth(),
-                weather = it,
-                onClick = {
-                    onClick(it)
+    Box() {
+        AnimatedVisibilityFade(visible = locations.isNotEmpty()) {
+            LazyColumn(contentPadding = PaddingValues(top = Paddings.xxxSmall, bottom = 120.dp)) {
+                items(locations, key = { it.location.url }) {
+                    PinnedLocation(
+                        modifier = Modifier
+                            .animateItemPlacement()
+                            .padding(vertical = Paddings.xxxSmall)
+                            .fillMaxWidth(),
+                        weather = it,
+                        onClick = {
+                            onClick(it)
+                        }
+                    )
                 }
-            )
+            }
+        }
+        AnimatedVisibilityFade(visible = locations.isEmpty()) {
+            Empty(text = "Start searching for locations to add here...")
         }
     }
 }

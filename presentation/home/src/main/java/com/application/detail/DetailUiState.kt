@@ -11,7 +11,7 @@ data class DetailUiState(
     val forecast: Forecast? = null,
     val isRefreshing: Boolean = false
 ) {
-    fun getLocationTitle() =
+    fun getLocationTitle() = if(forecast == null) "- - -" else
         forecast?.current?.location?.name + "," + forecast?.current?.location?.region + "," + forecast?.current?.location?.country
 
     fun getDisplayDate() = format(Date(), format = DateFormats.E_DD_MM_YYYY.format)

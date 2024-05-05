@@ -1,5 +1,6 @@
 package com.application.search.component
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -17,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.application.base.common.AnimatedVisibilityFade
+import com.application.base.common.Empty
 import com.application.base.common.SpacerMax
 import com.application.base.common.SpacerXS
 import com.application.base.theme.MyColor
@@ -29,9 +32,11 @@ import com.application.home.R
 
 @Composable
 fun SearchResultView(results: List<Location>, onPin: (Location) -> Unit) {
-    LazyColumn {
-        items(results, key = { it.id }) {
-            SearchResultItem(it, onClick = {onPin(it)})
+    AnimatedVisibilityFade(visible = results.isNotEmpty()) {
+        LazyColumn {
+            items(results, key = { it.id }) {
+                SearchResultItem(it, onClick = {onPin(it)})
+            }
         }
     }
 }

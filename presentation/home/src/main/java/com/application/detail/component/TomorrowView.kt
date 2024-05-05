@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.application.base.common.AnimatedVisibilityFade
 import com.application.base.common.SpacerXS
 import com.application.base.common.SpacerXXS
 import com.application.base.theme.MyColor
@@ -34,86 +35,90 @@ import com.application.domain.model.Forecast
 
 @Composable
 fun TomorrowView(day: Forecast.ForecastDay?) {
-    Text(text = "TOMORROW", style = MyTypography.B14, color = MyColor.textSecondary)
-    SpacerXXS()
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .shadow(
-                elevation = 12.dp,
-                spotColor = MyColor.accentPrimary.copy(0.65f),
-                shape = MyShape.small
-            )
-            .background(MyColor.bgPrimary, MyShape.small)
-            .border(0.8.dp, MyColor.textTertiaryMuted.copy(0.25f), MyShape.small)
-            .padding(horizontal = Paddings.xSmall, vertical = Paddings.xxSmall)
-    ) {
-        SpacerXS()
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                text = day?.avgTempC.toString() + "°",
-                style = MyTypography.B24.copy(fontSize = 32.sp, color = MyColor.textPrimary),
-                textAlign = TextAlign.Center
-            )
-            SpacerXS()
-            Spacer(
-                modifier = Modifier
-                    .width(1.dp)
-                    .height(50.dp)
-                    .background(MyColor.textTertiaryMuted.copy(0.25f))
-            )
-            SpacerXS()
+    AnimatedVisibilityFade(visible = day != null) {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Text(text = "TOMORROW", style = MyTypography.B14, color = MyColor.textSecondary)
+            SpacerXXS()
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(2f)
+                    .shadow(
+                        elevation = 12.dp,
+                        spotColor = MyColor.accentPrimary.copy(0.65f),
+                        shape = MyShape.small
+                    )
+                    .background(MyColor.bgPrimary, MyShape.small)
+                    .border(0.8.dp, MyColor.textTertiaryMuted.copy(0.25f), MyShape.small)
+                    .padding(horizontal = Paddings.xSmall, vertical = Paddings.xxSmall)
             ) {
-                Text(
-                    text = day?.conditionName ?: "",
-                    style = MyTypography.B16.copy(color = MyColor.textPrimary)
-                )
-                Text(
-                    text = "${day?.chanceOfRain}% Chances of rain",
-                    style = MyTypography.SB14.copy(color = MyColor.textTertiary)
-                )
-            }
-            SpacerXS()
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(0.45f), contentAlignment = Alignment.Center
-            ) {
-                AsyncImage(
-                    model = day?.conditionalUrl ?: "",
-                    contentDescription = "",
+                SpacerXS()
+                Row(
                     modifier = Modifier
-                        .size(44.dp),
-                    contentScale = ContentScale.Crop
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
+                        text = day?.avgTempC.toString() + "°",
+                        style = MyTypography.B24.copy(fontSize = 32.sp, color = MyColor.textPrimary),
+                        textAlign = TextAlign.Center
+                    )
+                    SpacerXS()
+                    Spacer(
+                        modifier = Modifier
+                            .width(1.dp)
+                            .height(50.dp)
+                            .background(MyColor.textTertiaryMuted.copy(0.25f))
+                    )
+                    SpacerXS()
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(2f)
+                    ) {
+                        Text(
+                            text = day?.conditionName ?: "",
+                            style = MyTypography.B16.copy(color = MyColor.textPrimary)
+                        )
+                        Text(
+                            text = "${day?.chanceOfRain}% Chances of rain",
+                            style = MyTypography.SB14.copy(color = MyColor.textTertiary)
+                        )
+                    }
+                    SpacerXS()
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(0.45f), contentAlignment = Alignment.Center
+                    ) {
+                        AsyncImage(
+                            model = day?.conditionalUrl ?: "",
+                            contentDescription = "",
+                            modifier = Modifier
+                                .size(44.dp),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                    SpacerXS()
+                }
+
+                SpacerXS()
+
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(1.dp)
+                        .background(MyColor.textTertiaryMuted.copy(0.25f))
                 )
+
+                SpacerXS()
+
+                BottomView(day = day)
+
             }
-            SpacerXS()
         }
-
-        SpacerXS()
-
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(1.dp)
-                .background(MyColor.textTertiaryMuted.copy(0.25f))
-        )
-
-        SpacerXS()
-
-        BottomView(day = day)
-
     }
 }
 
