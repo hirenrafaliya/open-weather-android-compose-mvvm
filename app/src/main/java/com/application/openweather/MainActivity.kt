@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import com.application.openweather.navigation.SetupNavGraph
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,7 +24,9 @@ class MainActivity : ComponentActivity() {
         )
         setTheme(R.style.Theme_OpenWeather)
         setContent {
-
+            AppTheme {
+                SetupNavGraph()
+            }
         }
     }
 }
