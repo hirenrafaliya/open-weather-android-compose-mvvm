@@ -11,6 +11,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import javax.inject.Inject
+import kotlin.math.ln
 
 class WeatherRepository
 @Inject constructor(private val client: HttpClient) {
@@ -40,6 +41,13 @@ class WeatherRepository
     suspend fun search(location: String) =
         client.get(Endpoint.SEARCH) {
             parameter("q", location)
+            addApiKey()
+        }.handleBody<List<Search>>()
+
+    suspend fun getCity(lat: String, lng: String) =
+        client.get(Endpoint.SEARCH) {
+            parameter("lat", lat)
+            parameter("lng", lng)
             addApiKey()
         }.handleBody<List<Search>>()
 }

@@ -3,6 +3,7 @@ package com.application.domain.usecase
 import com.application.data.repository.WeatherRepository
 import com.application.domain.util.safeExecute
 import javax.inject.Inject
+import kotlin.math.ln
 
 class WeatherUseCase
 @Inject constructor(private val weatherRepository: WeatherRepository) {
@@ -21,5 +22,9 @@ class WeatherUseCase
 
     suspend fun search(location: String) = safeExecute {
         weatherRepository.search(location = location)
+    }
+
+    suspend fun getCity(lat: String, lng: String) = safeExecute {
+        weatherRepository.getCity(lat = lat, lng = lng)
     }
 }

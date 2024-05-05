@@ -1,4 +1,4 @@
-package com.application.home
+package com.application.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,10 +10,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel
+class SearchViewModel
 @Inject constructor(private val weatherUseCase: WeatherUseCase) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(HomeUiState())
+    private val _uiState = MutableStateFlow(SearchUiState())
     val uiState = _uiState.asStateFlow()
 
     init {

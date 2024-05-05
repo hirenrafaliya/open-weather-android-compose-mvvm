@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.application.base.navigation.Screen
 import com.application.home.HomeScreen
+import com.application.search.SearchScreen
 
 @Composable
 fun SetupNavGraph(navController: NavHostController = rememberNavController()) {
@@ -20,6 +21,9 @@ fun SetupNavGraph(navController: NavHostController = rememberNavController()) {
         }
         composable(Screen.HomeScreen.route) {
             HomeScreen(navController = navController)
+        }
+        composable(Screen.SearchScreen.route) {
+            SearchScreen(navController = navController)
         }
     }
 }

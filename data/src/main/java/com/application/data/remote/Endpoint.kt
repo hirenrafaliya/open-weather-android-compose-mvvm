@@ -11,4 +11,6 @@ object Endpoint {
     val SEARCH = "$BASE_URL/search.json"
     val FUTURE_WEATHER = "$BASE_URL/future.json"
 
+    val GET_CITY = "https://nominatim.openstreetmap.org/reverse?format=json"
+
 }

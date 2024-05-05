@@ -24,12 +24,11 @@ object ColorDef {
     val textTertiary = color(Color(0xFF6B6B6B), Color(0x40FFFFFF))
     val textTertiaryMuted = color(Color(0xFF8B8B8B), Color(0x0DFFFFFF))
 
-    val accentPrimary = color(Color(0xFF26B661), Color(0xFF26B661))
-    val accentPrimaryMuted = color(Color(0x3326B661), Color(0xFF416AFF))
+    val accentPrimary = color(Color(0xFF007AFF), Color(0xFF26B661))
+    val accentPrimaryMuted = color(Color(0xFFDAEBFF), Color(0xFF416AFF))
 
-    //    val accentLightPrimary = color(Color(0xFFA4B7FF), Color(0xBF2C3668))
-    val accentLightPrimary = color(Color(0xBF2C6847), Color(0xBF2C6847))
-    val accentLightSecondary = color(Color(0xBF1F3F2D), Color(0xBF1F3F2D))
+    val accentLightPrimary = color(Color(0xFF48A0FF), Color(0xBF2C6847))
+    val accentLightSecondary = color(Color(0xFF92C7FF), Color(0xBF1F3F2D))
 
     val redPrimary = color(Color(0xFFF44336), Color(0xFFF44336))
     val redSecondary = color(Color(0xFFF5655B), Color(0x4D5A2523))
