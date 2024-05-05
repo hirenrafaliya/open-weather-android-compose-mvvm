@@ -19,7 +19,7 @@ data class Location(
             dto?.name ?: "",
             dto?.region ?: "",
             dto?.country ?: "",
-            dto?.name + "-" + dto?.region + "-" + dto?.country
+            (dto?.name + " " + dto?.region + " " + dto?.country).lowercase().replace(" ", "-")
         )
     }
 }

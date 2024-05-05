@@ -43,6 +43,7 @@ import com.application.base.common.SpacerM
 import com.application.base.common.SpacerXS
 import com.application.base.common.SpacerXXXS
 import com.application.base.common.StatusBarForegroundColor
+import com.application.base.navigation.Screen
 import com.application.base.theme.MyColor
 import com.application.base.theme.MyShape
 import com.application.base.theme.MyTypography
@@ -82,7 +83,10 @@ fun SearchScreen(navController: NavHostController) {
         },
         onPin = {
             viewModel.pinLocation(it)
-        }, pinnedLocations = uiState.pinnedLocations
+        }, pinnedLocations = uiState.pinnedLocations,
+        onLocationClick = {
+            navController.navigate(Screen.DetailScreen.withLocationUrl(it.location.url))
+        }
     )
 }
 
@@ -96,7 +100,8 @@ private fun SearchScreenUi(
     onSearch: () -> Unit,
     onClose: () -> Unit,
     onPin: (Location) -> Unit,
-    pinnedLocations: List<LocationWeather>
+    pinnedLocations: List<LocationWeather>,
+    onLocationClick: (LocationWeather) -> Unit
 ) {
     StatusBarForegroundColor(isLight = true)
     Column(
@@ -132,7 +137,7 @@ private fun SearchScreenUi(
                 .weight(1f)
                 .padding(horizontal = Paddings.xSmall, vertical = Paddings.xxSmall)
         ) {
-            PinnedLocationList(locations = pinnedLocations)
+            PinnedLocationList(locations = pinnedLocations, onClick = onLocationClick)
         }
     }
 }

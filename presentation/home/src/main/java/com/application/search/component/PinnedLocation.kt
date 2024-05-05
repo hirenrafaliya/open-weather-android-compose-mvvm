@@ -40,7 +40,7 @@ import com.application.domain.model.LocationWeather
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun PinnedLocationList(locations: List<LocationWeather>) {
+fun PinnedLocationList(locations: List<LocationWeather>, onClick: (LocationWeather) -> Unit) {
     LazyColumn(contentPadding = PaddingValues(top = Paddings.xxxSmall, bottom = 120.dp)) {
         items(locations, key = { it.location.url }) {
             PinnedLocation(
@@ -48,14 +48,17 @@ fun PinnedLocationList(locations: List<LocationWeather>) {
                     .animateItemPlacement()
                     .padding(vertical = Paddings.xxxSmall)
                     .fillMaxWidth(),
-                weather = it
+                weather = it,
+                onClick = {
+                    onClick(it)
+                }
             )
         }
     }
 }
 
 @Composable
-fun PinnedLocation(modifier: Modifier = Modifier, weather: LocationWeather) {
+fun PinnedLocation(modifier: Modifier = Modifier, weather: LocationWeather, onClick: () -> Unit) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -63,7 +66,7 @@ fun PinnedLocation(modifier: Modifier = Modifier, weather: LocationWeather) {
             .background(MyColor.bgPrimary, MyShape.small)
 //            .border(1.dp, MyColor.textTertiaryMuted.copy(0.25f), MyShape.small)
             .clip(MyShape.small)
-            .clickable { }
+            .clickable { onClick() }
             .padding(horizontal = Paddings.xSmall, vertical = Paddings.xxSmall)
     ) {
         TopPinnedLocationView(

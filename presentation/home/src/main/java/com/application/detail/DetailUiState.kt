@@ -1,6 +1,6 @@
-package com.application.home
+package com.application.detail
 
-data class HomeUiState (
+data class DetailUiState (
     val isLoading: Boolean = false,
     val error: String? = null
 )
