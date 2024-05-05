@@ -3,6 +3,7 @@ package com.application.domain.usecase
 import android.location.Location
 import com.application.data.repository.SearchRepository
 import com.application.domain.model.LocationDetail
+import com.application.domain.model.SearchResult
 import com.application.domain.util.safeExecute
 import javax.inject.Inject
 
@@ -14,6 +15,14 @@ class SearchUseCase
             searchRepository.getCity(location.latitude.toString(), location.longitude.toString())
 
         LocationDetail.fromDto(response)
+    }
+
+    suspend fun search(query: String) = safeExecute {
+        val response =
+            searchRepository.search(query)
+        response.map {
+            SearchResult.fromDto(it)
+        }
     }
 
 }

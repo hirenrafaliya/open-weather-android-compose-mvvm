@@ -19,18 +19,17 @@ class SearchViewModel
     private val _uiState = MutableStateFlow(SearchUiState())
     val uiState = _uiState.asStateFlow()
 
-    init {
-        onStart()
-    }
-
-    private fun onStart() = viewModelScope.launch {
-//        searchUseCase.
-    }
-
     fun changeSearchText(text: String) = _uiState.update { it.copy(search = text) }
 
     fun search() = viewModelScope.launch {
-
+        _uiState.update { it.copy(isLoading = false, error = null) }
+        val response = searchUseCase.search(_uiState.value.search)
+        response.onSuccess { data ->
+            _uiState.update { it.copy(isLoading = false, searchResults = data, search = "") }
+        }
+        response.onFailure { error ->
+            _uiState.update { it.copy(isLoading = false, error = error.message) }
+        }
     }
 
     fun getCurrentCity(location: Location) = viewModelScope.launch {
