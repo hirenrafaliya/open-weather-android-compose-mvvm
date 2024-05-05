@@ -1,8 +1,8 @@
 package com.application.detail
 
-import com.application.base.util.DateFormats
-import com.application.base.util.format
 import com.application.domain.model.Forecast
+import com.application.domain.util.DateFormats
+import com.application.domain.util.format
 import java.util.Date
 
 data class DetailUiState(

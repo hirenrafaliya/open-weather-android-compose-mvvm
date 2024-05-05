@@ -2,6 +2,7 @@ package com.application.domain.model
 
 import com.application.data.remote.dto.ForecastWeatherResponse
 import com.application.data.remote.dto.Forecastday
+import com.application.domain.util.format
 
 data class Forecast(
     val current: LocationWeather,
@@ -27,6 +28,9 @@ data class Forecast(
         val conditionalUrl: String,
         val date: String
     ) {
+
+        fun getDisplayDate() = format(text = date)
+
         companion object {
             fun fromDto(dto: Forecastday) = ForecastDay(
                 dto.day.maxtempC,

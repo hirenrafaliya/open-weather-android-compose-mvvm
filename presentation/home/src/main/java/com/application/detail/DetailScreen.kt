@@ -16,6 +16,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.Icon
@@ -65,7 +69,11 @@ fun DetailScreen(navController: NavHostController) {
             navController.popBackStack()
         },
         currentDay = uiState.forecast?.current,
-        tomorrowDay = uiState.forecast?.forecastDays?.first()
+        tomorrowDay = uiState.forecast?.forecastDays?.first(),
+        nextDays = uiState.forecast?.forecastDays?.subList(
+            2,
+            uiState.forecast?.forecastDays?.lastIndex ?: 0
+        )
     )
 }
 
@@ -75,7 +83,8 @@ private fun DetailScreenUi(
     displayDate: String,
     onBack: () -> Unit,
     currentDay: LocationWeather?,
-    tomorrowDay: Forecast.ForecastDay?
+    tomorrowDay: Forecast.ForecastDay?,
+    nextDays: List<Forecast.ForecastDay>?
 ) {
     StatusBarForegroundColor(isLight = true)
     Column(
@@ -101,13 +110,94 @@ private fun DetailScreenUi(
                 .fillMaxSize()
                 .weight(1f)
                 .padding(horizontal = Paddings.xSmall, vertical = Paddings.xxSmall)
+                .verticalScroll(rememberScrollState())
         ) {
 
             SpacerL()
             TomorrowView(day = tomorrowDay)
-
+            SpacerL()
+            NextDaysView(days = nextDays ?: listOf())
+            SpacerL()
+            SpacerL()
         }
     }
+}
+
+@Composable
+fun NextDaysView(days: List<Forecast.ForecastDay>) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Text(text = "UPCOMING DAYS", style = MyTypography.B14, color = MyColor.textSecondary)
+        SpacerXXS()
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .shadow(
+                    elevation = 12.dp,
+                    spotColor = MyColor.accentPrimary.copy(0.65f),
+                    shape = MyShape.small
+                )
+                .background(MyColor.bgPrimary, MyShape.small)
+                .border(0.8.dp, MyColor.textTertiaryMuted.copy(0.25f), MyShape.small)
+                .padding(horizontal = Paddings.xSmall, vertical = Paddings.xxSmall)
+        ) {
+            days.forEachIndexed { index, forecastDay ->
+                NextDayItem(day = forecastDay, showDivider = index != days.lastIndex)
+            }
+        }
+    }
+}
+
+@Composable
+private fun NextDayItem(day: Forecast.ForecastDay, showDivider: Boolean = true) {
+    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.25f), contentAlignment = Alignment.Center
+        ) {
+            AsyncImage(
+                model = day.conditionalUrl,
+                contentDescription = "",
+                modifier = Modifier
+                    .size(44.dp),
+                contentScale = ContentScale.Crop
+            )
+        }
+        SpacerXS()
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1.0f),
+            text = day.getDisplayDate(),
+            style = MyTypography.SB16,
+            color = MyColor.textPrimary
+        )
+        SpacerXS()
+        Spacer(
+            modifier = Modifier
+                .height(22.dp)
+                .width(1.dp)
+                .background(MyColor.textTertiaryMuted.copy(0.25f))
+        )
+        SpacerXS()
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.35f),
+            text = "${day.minTempC.toInt()}° - ${day.maxTempC.toInt()}°",
+            style = MyTypography.B16,
+            color = MyColor.textTertiary,
+            textAlign = TextAlign.End
+        )
+        SpacerXS()
+    }
+    if (showDivider)
+        Spacer(
+            modifier = Modifier
+                .height(1.dp)
+                .fillMaxWidth()
+                .background(MyColor.textTertiaryMuted.copy(0.25f))
+        )
 }
 
 @Composable
