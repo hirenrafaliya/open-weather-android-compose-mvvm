@@ -48,7 +48,7 @@ fun TomorrowView(day: Forecast.ForecastDay?) {
                         shape = MyShape.small
                     )
                     .background(MyColor.bgPrimary, MyShape.small)
-                    .border(0.8.dp, MyColor.textTertiaryMuted.copy(0.25f), MyShape.small)
+//                    .border(0.8.dp, MyColor.textTertiaryMuted.copy(0.25f), MyShape.small)
                     .padding(horizontal = Paddings.xSmall, vertical = Paddings.xxSmall)
             ) {
                 SpacerXS()

@@ -2,6 +2,7 @@ package com.application.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.application.domain.model.LocationWeather
 import com.application.domain.usecase.SearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,6 +33,14 @@ class SearchViewModel
 
     fun clearSearch() = _uiState.update {
         it.copy(search = "", searchResults = listOf())
+    }
+
+    fun removeLocation(location: LocationWeather) = viewModelScope.launch {
+        _uiState.update {
+            it.copy(pinnedLocations = _uiState.value.pinnedLocations.toMutableList().apply {
+                removeIf { it.location.url == location.location.url }
+            })
+        }
     }
 
     fun pinLocation(location: com.application.domain.model.Location) = viewModelScope.launch {

@@ -65,9 +65,10 @@ fun SearchScreen(navController: NavHostController) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     OnStart {
-        getCurrentLocation(context = context, onLocation = {
-            viewModel.getCurrentCity(it)
-        })
+        if (uiState.pinnedLocations.isEmpty())
+            getCurrentLocation(context = context, onLocation = {
+                viewModel.getCurrentCity(it)
+            })
     }
 
     SearchScreenUi(
@@ -88,7 +89,10 @@ fun SearchScreen(navController: NavHostController) {
         onLocationClick = {
             navController.navigate(Screen.DetailScreen.withLocationUrl(it.location.url))
         },
-        error = uiState.error ?: ""
+        error = uiState.error ?: "",
+        onRemove = {
+            viewModel.removeLocation(it)
+        }
     )
 }
 
@@ -104,7 +108,8 @@ private fun SearchScreenUi(
     onPin: (Location) -> Unit,
     pinnedLocations: List<LocationWeather>,
     onLocationClick: (LocationWeather) -> Unit,
-    error: String
+    error: String,
+    onRemove: (LocationWeather) -> Unit
 ) {
     StatusBarForegroundColor(isLight = true)
     Column(
@@ -140,7 +145,11 @@ private fun SearchScreenUi(
                 .weight(1f)
                 .padding(horizontal = Paddings.xSmall, vertical = Paddings.xxSmall)
         ) {
-            PinnedLocationList(locations = pinnedLocations, onClick = onLocationClick)
+            PinnedLocationList(
+                locations = pinnedLocations,
+                onClick = onLocationClick,
+                onRemove = onRemove
+            )
         }
 
         ErrorView(error = error)
@@ -160,7 +169,11 @@ private fun getCurrentLocation(context: Context, onLocation: (android.location.L
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CurrentCityView(title: String, date: String, alignment: Alignment.Horizontal = Alignment.CenterHorizontally) {
+fun CurrentCityView(
+    title: String,
+    date: String,
+    alignment: Alignment.Horizontal = Alignment.CenterHorizontally
+) {
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = alignment) {
         Text(
             modifier = Modifier
