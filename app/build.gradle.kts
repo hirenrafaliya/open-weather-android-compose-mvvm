@@ -28,9 +28,6 @@ android {
         debug {
 
         }
-        create("staging") {
-            initWith(getByName("debug"))
-        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true

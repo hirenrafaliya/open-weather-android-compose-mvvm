@@ -20,9 +20,6 @@ android {
         debug {
 
         }
-        create("staging") {
-            initWith(getByName("debug"))
-        }
         release {
             signingConfig = signingConfigs.getByName("debug")
         }

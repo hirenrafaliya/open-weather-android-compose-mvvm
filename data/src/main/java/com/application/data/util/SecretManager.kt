@@ -1,7 +1,4 @@
 package com.application.data.util
-
-import com.staarsign.data.util.isRelease
-
 /**
  * Handles all secret key variables for the app
  */

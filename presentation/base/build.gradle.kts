@@ -4,9 +4,8 @@ plugins {
 
     alias(libs.plugins.com.google.dagger.hilt.android)
     alias(libs.plugins.com.google.devtools.ksp)
-    id("kotlinx-serialization")
-
 }
+
 android {
     namespace = "com.application.base"
     compileSdk = 34
@@ -72,6 +71,4 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     implementation(libs.hilt.navigation.compose)
-
-    implementation(libs.kotlinx.serialization.json)
 }
