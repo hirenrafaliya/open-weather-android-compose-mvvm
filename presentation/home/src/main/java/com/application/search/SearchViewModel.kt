@@ -6,6 +6,7 @@ import com.application.domain.usecase.WeatherUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,5 +24,7 @@ class SearchViewModel
     private fun onStart()  = viewModelScope.launch {
         weatherUseCase.search("Surat")
     }
+
+    fun changeSearchText(text: String) = _uiState.update { it.copy(search = text) }
 
 }

@@ -7,13 +7,13 @@ import androidx.compose.ui.graphics.Color
 
 object ColorDef {
     val bgPrimary = color(Color(0xFFFFFFFF), Color(0xFF1A1A1A))
-    val bgPrimaryMuted = color(Color(0xFFEBEBEB), Color(0xFF1E1E1E))
+    val bgPrimaryMuted = color(Color(0x33FFFFFF), Color(0xFF1E1E1E))
 
-    val bgSecondary = color(Color(0xFFCACACA), Color(0xFF2B2B2B))
-    val bgSecondaryMuted = color(Color(0xFFE0E0E0), Color(0xFF3D3D3D))
+    val bgSecondary = color(Color(0xCCFFFFFF), Color(0xFF2B2B2B))
+    val bgSecondaryMuted = color(Color(0x66FFFFFF), Color(0xFF3D3D3D))
 
-    val bgTertiary = color(Color(0xFFCACACA), Color(0xFF5C5C5C))
-    val bgTertiaryMuted = color(Color(0xFFE0E0E0), Color(0xFFDDDDDD))
+    val bgTertiary = color(Color(0x99FFFFFF), Color(0xFF5C5C5C))
+    val bgTertiaryMuted = color(Color(0x1AE0E0E0), Color(0xFFDDDDDD))
 
     val textPrimary = color(Color(0xFF000000), Color(0xFFFFFFFF))
     val textPrimaryMuted = color(Color(0xFF181818), Color(0xBFFFFFFF))
@@ -45,6 +45,8 @@ object ColorDef {
 
     val whitePrimary = color(Color(0xFFFFFFFF), Color(0xFF000000))
     val blackPrimary = color(Color(0xFF000000), Color(0xFFFFFFFF))
+
+    val bgGradient = listOf(Color(0xFF0B43CA), Color(0xFF2b62e9))
 
     @Composable
     fun getMaterialColorScheme(): ColorScheme =
