@@ -8,7 +8,6 @@ data class ForecastWeatherResponse (
     @SerialName("location") var location : Location = Location(),
     @SerialName("current") var current : Current = Current(),
     @SerialName("forecast") var forecast : Forecast = Forecast(),
-    @SerialName("alerts") var alerts : Alerts = Alerts()
 
 )
 

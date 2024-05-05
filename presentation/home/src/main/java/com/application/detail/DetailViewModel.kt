@@ -2,17 +2,19 @@ package com.application.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.application.base.common.tager
-import com.application.domain.usecase.WeatherUseCase
+import androidx.lifecycle.viewModelScope
+import com.application.domain.usecase.DetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel
 @Inject constructor(
-    private val weatherUseCase: WeatherUseCase,
+    private val detailUseCase: DetailUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -22,6 +24,18 @@ class DetailViewModel
     val uiState = _uiState.asStateFlow()
 
     init {
-        tager(locationUrl)
+        getForecast()
+    }
+
+    private fun getForecast() = viewModelScope.launch {
+        _uiState.update { it.copy(isLoading = false, error = null) }
+        val response = detailUseCase.getForecastWeather(locationUrl, 7)
+        response.onSuccess { data ->
+            _uiState.update { it.copy(isLoading = false, forecast = data) }
+        }
+        response.onFailure { error ->
+            _uiState.update { it.copy(isLoading = false, error = error.message) }
+
+        }
     }
 }

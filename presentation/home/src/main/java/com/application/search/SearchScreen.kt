@@ -155,8 +155,8 @@ private fun getCurrentLocation(context: Context, onLocation: (android.location.L
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CurrentCityView(title: String, date: String) {
-    Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+fun CurrentCityView(title: String, date: String, alignment: Alignment.Horizontal = Alignment.CenterHorizontally) {
+    Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = alignment) {
         Text(
             modifier = Modifier
                 .fillMaxWidth()
