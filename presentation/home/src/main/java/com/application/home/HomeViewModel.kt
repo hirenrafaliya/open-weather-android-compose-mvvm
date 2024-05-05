@@ -16,12 +16,4 @@ class HomeViewModel
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState = _uiState.asStateFlow()
 
-    init {
-        onStart()
-    }
-
-    private fun onStart()  = viewModelScope.launch {
-        weatherUseCase.search("Surat")
-    }
-
 }

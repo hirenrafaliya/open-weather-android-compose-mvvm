@@ -37,17 +37,4 @@ class WeatherRepository
             parameter("dt", date)
             addApiKey()
         }.handleBody<FutureWeatherResponse>()
-
-    suspend fun search(location: String) =
-        client.get(Endpoint.SEARCH) {
-            parameter("q", location)
-            addApiKey()
-        }.handleBody<List<Search>>()
-
-    suspend fun getCity(lat: String, lng: String) =
-        client.get(Endpoint.SEARCH) {
-            parameter("lat", lat)
-            parameter("lng", lng)
-            addApiKey()
-        }.handleBody<List<Search>>()
 }

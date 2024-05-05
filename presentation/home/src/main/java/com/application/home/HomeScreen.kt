@@ -20,11 +20,6 @@ fun HomeScreen(navController: NavHostController) {
     val viewModel: HomeViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    OnStart {
-        getCurrentLocation(context = context, onLocation = {
-
-        })
-    }
 
     HomeScreenUi()
 }
@@ -32,14 +27,4 @@ fun HomeScreen(navController: NavHostController) {
 @Composable
 private fun HomeScreenUi() {
 
-}
-
-@SuppressLint("MissingPermission")
-private fun getCurrentLocation(context: Context, onLocation: (Location) -> Unit) {
-    val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-    fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-        location.also {
-            onLocation(it)
-        }
-    }
 }

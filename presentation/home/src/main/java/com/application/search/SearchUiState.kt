@@ -1,10 +1,15 @@
 package com.application.search
 
-data class SearchUiState (
+import com.application.base.util.DateFormats
+import com.application.base.util.format
+import java.util.Date
+
+data class SearchUiState(
     val isLoading: Boolean = false,
     val error: String? = null,
     val search: String = "",
-    val city: String = "",
-    val region: String = "",
-    val displayDate: String = ""
-)
+    val displayAddress: String = ""
+) {
+    fun getLocationTitle() = displayAddress
+    fun getDisplayDate() = format(Date(), format = DateFormats.E_DD_MM_YYYY.format)
+}

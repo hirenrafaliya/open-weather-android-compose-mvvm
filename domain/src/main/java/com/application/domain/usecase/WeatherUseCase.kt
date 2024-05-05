@@ -19,12 +19,4 @@ class WeatherUseCase
     suspend fun getForecastWeather(location: String, days: Int) = safeExecute {
         weatherRepository.getForecastWeather(location = location, days = days)
     }
-
-    suspend fun search(location: String) = safeExecute {
-        weatherRepository.search(location = location)
-    }
-
-    suspend fun getCity(lat: String, lng: String) = safeExecute {
-        weatherRepository.getCity(lat = lat, lng = lng)
-    }
 }
