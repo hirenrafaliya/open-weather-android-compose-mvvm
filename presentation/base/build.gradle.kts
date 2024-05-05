@@ -1,27 +1,21 @@
 plugins {
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    kotlin("kapt")
+
     alias(libs.plugins.com.google.dagger.hilt.android)
     alias(libs.plugins.com.google.devtools.ksp)
     id("kotlinx-serialization")
-}
 
+}
 android {
-    namespace = "com.application.openweather"
+    namespace = "com.application.base"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = libs.versions.application.id.get()
         minSdk = 24
-        targetSdk = 34
-        versionCode = libs.versions.version.code.get().toInt()
-        versionName = libs.versions.version.name.get()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -32,13 +26,6 @@ android {
             initWith(getByName("debug"))
         }
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
-
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
             signingConfig = signingConfigs.getByName("debug")
         }
     }
@@ -55,18 +42,15 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.12"
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 dependencies {
 
-    implementation(project(":presentation"))
+    implementation(project(":domain"))
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.navigation.compose)
@@ -74,8 +58,20 @@ dependencies {
 
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
 
     androidTestImplementation(platform(libs.androidx.compose.bom))
+
+    debugImplementation(libs.androidx.ui.tooling)
+
+    implementation(libs.hilt.navigation.compose)
+
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+    implementation(libs.hilt.navigation.compose)
+
+    implementation(libs.kotlinx.serialization.json)
 }

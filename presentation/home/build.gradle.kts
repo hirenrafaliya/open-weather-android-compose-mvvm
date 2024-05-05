@@ -8,7 +8,7 @@ plugins {
 
 }
 android {
-    namespace = "com.application.presentation"
+    namespace = "com.application.home"
     compileSdk = 34
 
     defaultConfig {
@@ -47,6 +47,7 @@ android {
 dependencies {
 
     implementation(project(":domain"))
+    implementation(project(":presentation:base"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
