@@ -8,7 +8,8 @@ import java.util.Date
 data class DetailUiState(
     val isLoading: Boolean = false,
     val error: String? = null,
-    val forecast: Forecast? = null
+    val forecast: Forecast? = null,
+    val isRefreshing: Boolean = false
 ) {
     fun getLocationTitle() =
         forecast?.current?.location?.name + "," + forecast?.current?.location?.region + "," + forecast?.current?.location?.country

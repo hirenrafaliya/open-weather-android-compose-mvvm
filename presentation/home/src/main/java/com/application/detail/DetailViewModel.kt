@@ -27,8 +27,8 @@ class DetailViewModel
         getForecast()
     }
 
-    private fun getForecast() = viewModelScope.launch {
-        _uiState.update { it.copy(isLoading = false, error = null) }
+    fun getForecast() = viewModelScope.launch {
+        _uiState.update { it.copy(isLoading = true, error = null) }
         val response = detailUseCase.getForecastWeather(locationUrl, 15)
         response.onSuccess { data ->
             _uiState.update { it.copy(isLoading = false, forecast = data) }

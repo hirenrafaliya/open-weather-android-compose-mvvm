@@ -20,8 +20,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -73,10 +77,15 @@ fun DetailScreen(navController: NavHostController) {
         nextDays = uiState.forecast?.forecastDays?.subList(
             2,
             uiState.forecast?.forecastDays?.lastIndex ?: 0
-        )
+        ),
+        onRefresh = {
+            viewModel.getForecast()
+        },
+        isRefreshing = uiState.isLoading
     )
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun DetailScreenUi(
     locationTitle: String,
@@ -84,41 +93,53 @@ private fun DetailScreenUi(
     onBack: () -> Unit,
     currentDay: LocationWeather?,
     tomorrowDay: Forecast.ForecastDay?,
-    nextDays: List<Forecast.ForecastDay>?
+    nextDays: List<Forecast.ForecastDay>?,
+    onRefresh: () -> Unit,
+    isRefreshing: Boolean
 ) {
-    StatusBarForegroundColor(isLight = true)
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = MyColor.accentPrimary)
-                .statusBarsPadding()
-                .padding(horizontal = Paddings.xSmall)
-                .animateContentSize()
-        ) {
-            SpacerXS()
-            TopAppBar(locationTitle = locationTitle, displayDate = displayDate, onBack = onBack)
-            SpacerM()
-            TodayView(currentDay = currentDay)
-            SpacerL()
-        }
+    val pullRefreshState = rememberPullRefreshState(isRefreshing, onRefresh)
 
+    StatusBarForegroundColor(isLight = true)
+    Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .weight(1f)
-                .padding(horizontal = Paddings.xSmall, vertical = Paddings.xxSmall)
-                .verticalScroll(rememberScrollState())
         ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = MyColor.accentPrimary)
+                    .statusBarsPadding()
+                    .padding(horizontal = Paddings.xSmall)
+                    .animateContentSize()
+            ) {
+                SpacerXS()
+                TopAppBar(locationTitle = locationTitle, displayDate = displayDate, onBack = onBack)
+                SpacerM()
+                TodayView(currentDay = currentDay)
+                SpacerL()
+            }
 
-            SpacerL()
-            TomorrowView(day = tomorrowDay)
-            SpacerL()
-            NextDaysView(days = nextDays ?: listOf())
-            SpacerL()
-            SpacerL()
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1f)
+                    .padding(horizontal = Paddings.xSmall, vertical = Paddings.xxSmall)
+                    .pullRefresh(state = pullRefreshState)
+                    .verticalScroll(rememberScrollState())
+            ) {
+
+                Column {
+                    SpacerL()
+                    TomorrowView(day = tomorrowDay)
+                    SpacerL()
+                    NextDaysView(days = nextDays ?: listOf())
+                    SpacerL()
+                    SpacerL()
+                }
+                PullRefreshIndicator(isRefreshing, pullRefreshState, Modifier.align(Alignment.TopCenter))
+
+            }
         }
     }
 }

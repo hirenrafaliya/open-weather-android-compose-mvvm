@@ -53,6 +53,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.navigation.compose)
     implementation(libs.core.splashscreen)
+    implementation(libs.material)
+    implementation(libs.material.compose)
 
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
