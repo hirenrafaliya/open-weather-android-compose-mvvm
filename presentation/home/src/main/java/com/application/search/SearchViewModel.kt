@@ -43,8 +43,10 @@ class SearchViewModel
                     isLoading = false,
                     pinnedLocations = _uiState.value.pinnedLocations.toMutableList().apply {
                         add(data)
-                    })
+                    }
+                )
             }
+            clearSearch()
         }
         response.onFailure { error ->
             _uiState.update { it.copy(isLoading = false, error = error.message) }

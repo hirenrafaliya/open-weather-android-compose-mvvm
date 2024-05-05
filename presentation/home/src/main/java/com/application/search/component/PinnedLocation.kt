@@ -1,5 +1,6 @@
 package com.application.search.component
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -37,12 +38,14 @@ import com.application.base.theme.Paddings
 import com.application.domain.model.LocationWeather
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PinnedLocationList(locations: List<LocationWeather>) {
     LazyColumn(contentPadding = PaddingValues(top = Paddings.xxxSmall, bottom = 120.dp)) {
         items(locations, key = { it.location.url }) {
             PinnedLocation(
                 modifier = Modifier
+                    .animateItemPlacement()
                     .padding(vertical = Paddings.xxxSmall)
                     .fillMaxWidth(),
                 weather = it
@@ -58,7 +61,7 @@ fun PinnedLocation(modifier: Modifier = Modifier, weather: LocationWeather) {
             .fillMaxWidth()
             .shadow(12.dp, spotColor = MyColor.accentPrimary.copy(0.85f))
             .background(MyColor.bgPrimary, MyShape.small)
-            .border(1.dp, MyColor.textTertiaryMuted.copy(0.25f), MyShape.small)
+//            .border(1.dp, MyColor.textTertiaryMuted.copy(0.25f), MyShape.small)
             .clip(MyShape.small)
             .clickable { }
             .padding(horizontal = Paddings.xSmall, vertical = Paddings.xxSmall)
@@ -100,8 +103,8 @@ private fun RowScope.BottomItem(title: String, value: String) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = title, style = MyTypography.SB14, color = MyColor.textTertiary)
-        Text(text = value, style = MyTypography.B16, color = MyColor.textPrimary)
+        Text(text = title, style = MyTypography.SB14, color = MyColor.textTertiaryMuted)
+        Text(text = value, style = MyTypography.B16, color = MyColor.textSecondary)
     }
 }
 
