@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import com.application.base.theme.AppTheme
 import com.application.openweather.navigation.SetupNavGraph
 import dagger.hilt.android.AndroidEntryPoint
 
