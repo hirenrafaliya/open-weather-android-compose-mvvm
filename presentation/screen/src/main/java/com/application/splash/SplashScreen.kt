@@ -1,5 +1,9 @@
 package com.application.splash
 
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -10,8 +14,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import com.application.base.common.OnStart
 import com.application.base.common.navigateAndClear
@@ -22,10 +28,22 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(navController: NavHostController) {
+    val context = LocalContext.current
+
+    fun navigate() = navController.navigateAndClear(Screen.SearchScreen.route)
+
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { _: Boolean ->
+        navigate()
+    }
 
     OnStart {
-        delay(3 * 1000)
-        navController.navigateAndClear(Screen.SearchScreen.route)
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            launcher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+        }
     }
 
     SplashScreeUi()
