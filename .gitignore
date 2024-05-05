@@ -28,3 +28,5 @@ render.experimental.xml
 
 # Android Profiling
 *.hprof
+
+data/cpp/libnative-lib.cpp
