@@ -39,10 +39,13 @@ fun SplashScreen(navController: NavHostController) {
     }
 
     OnStart {
+        delay(2 * 1000)
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
             != PackageManager.PERMISSION_GRANTED
         ) {
             launcher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+        } else {
+            navigate()
         }
     }
 

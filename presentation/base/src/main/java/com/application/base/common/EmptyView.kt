@@ -14,7 +14,7 @@ import com.application.base.theme.Paddings
 
 // For empty loading states
 @Composable
-fun Empty(modifier: Modifier = Modifier, text: String, color: Color = MyColor.textTertiary) {
+fun EmptyView(modifier: Modifier = Modifier, text: String, color: Color = MyColor.textTertiary) {
     Column(
         modifier = modifier.padding(horizontal = Paddings.xSmall, vertical = Paddings.xxSmall),
         verticalArrangement = Arrangement.Center,

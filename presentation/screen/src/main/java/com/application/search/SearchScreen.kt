@@ -38,6 +38,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.application.base.common.ErrorView
 import com.application.base.common.OnStart
 import com.application.base.common.SpacerM
 import com.application.base.common.SpacerXS
@@ -86,7 +87,8 @@ fun SearchScreen(navController: NavHostController) {
         }, pinnedLocations = uiState.pinnedLocations,
         onLocationClick = {
             navController.navigate(Screen.DetailScreen.withLocationUrl(it.location.url))
-        }
+        },
+        error = uiState.error ?: ""
     )
 }
 
@@ -101,7 +103,8 @@ private fun SearchScreenUi(
     onClose: () -> Unit,
     onPin: (Location) -> Unit,
     pinnedLocations: List<LocationWeather>,
-    onLocationClick: (LocationWeather) -> Unit
+    onLocationClick: (LocationWeather) -> Unit,
+    error: String
 ) {
     StatusBarForegroundColor(isLight = true)
     Column(
@@ -139,6 +142,8 @@ private fun SearchScreenUi(
         ) {
             PinnedLocationList(locations = pinnedLocations, onClick = onLocationClick)
         }
+
+        ErrorView(error = error)
     }
 }
 

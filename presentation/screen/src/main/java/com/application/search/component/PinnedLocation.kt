@@ -1,9 +1,7 @@
 package com.application.search.component
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,8 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.application.base.common.AnimatedVisibilityFade
-import com.application.base.common.Empty
-import com.application.base.common.SpacerS
+import com.application.base.common.EmptyView
 import com.application.base.common.SpacerXS
 import com.application.base.common.SpacerXXS
 import com.application.base.theme.MyColor
@@ -62,7 +59,7 @@ fun PinnedLocationList(locations: List<LocationWeather>, onClick: (LocationWeath
             }
         }
         AnimatedVisibilityFade(visible = locations.isEmpty()) {
-            Empty(text = "Start searching for locations to add here...")
+            EmptyView(text = "Start searching for locations to add here...")
         }
     }
 }

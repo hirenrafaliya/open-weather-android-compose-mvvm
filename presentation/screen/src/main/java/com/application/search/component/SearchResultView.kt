@@ -1,6 +1,5 @@
 package com.application.search.component
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -19,7 +18,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.application.base.common.AnimatedVisibilityFade
-import com.application.base.common.Empty
 import com.application.base.common.SpacerMax
 import com.application.base.common.SpacerXS
 import com.application.base.theme.MyColor

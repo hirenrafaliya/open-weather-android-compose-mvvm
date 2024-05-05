@@ -43,6 +43,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.application.base.common.ErrorView
 import com.application.base.common.SpacerL
 import com.application.base.common.SpacerM
 import com.application.base.common.SpacerXS
@@ -82,7 +83,8 @@ fun DetailScreen(navController: NavHostController) {
         onRefresh = {
             viewModel.getForecast()
         },
-        isRefreshing = uiState.isLoading
+        isRefreshing = uiState.isLoading,
+        error = uiState.error ?: ""
     )
 }
 
@@ -96,7 +98,8 @@ private fun DetailScreenUi(
     tomorrowDay: Forecast.ForecastDay?,
     nextDays: List<Forecast.ForecastDay>?,
     onRefresh: () -> Unit,
-    isRefreshing: Boolean
+    isRefreshing: Boolean,
+    error: String
 ) {
     val pullRefreshState = rememberPullRefreshState(isRefreshing, onRefresh)
 
@@ -138,9 +141,14 @@ private fun DetailScreenUi(
                     SpacerL()
                     SpacerL()
                 }
-                PullRefreshIndicator(isRefreshing, pullRefreshState, Modifier.align(Alignment.TopCenter))
+                PullRefreshIndicator(
+                    isRefreshing,
+                    pullRefreshState,
+                    Modifier.align(Alignment.TopCenter)
+                )
 
             }
+            ErrorView(error = error)
         }
     }
 }
