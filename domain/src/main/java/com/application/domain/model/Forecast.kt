@@ -24,7 +24,7 @@ data class Forecast(
         val chanceOfRain: Double,
         val changeOfSnow: Double,
         val conditionName: String,
-        val conditionUrl: String,
+        val conditionalUrl: String,
         val date: String
     ) {
         companion object {
