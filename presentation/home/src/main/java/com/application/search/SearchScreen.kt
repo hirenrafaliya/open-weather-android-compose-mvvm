@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -19,9 +18,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowForward
-import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -48,7 +44,8 @@ import com.application.base.theme.MyTypography
 import com.application.base.theme.Paddings
 import com.application.domain.model.SearchResult
 import com.application.home.R
-import com.application.home.component.SearchBar
+import com.application.search.component.SearchBar
+import com.application.search.component.SearchResultView
 import com.google.android.gms.location.LocationServices
 
 @Composable
@@ -73,6 +70,9 @@ fun SearchScreen(navController: NavHostController) {
         searchResults = uiState.searchResults,
         onSearch = {
             viewModel.search()
+        },
+        onClose = {
+            viewModel.clearSearch()
         }
     )
 }
@@ -84,7 +84,8 @@ private fun SearchScreenUi(
     locationTitle: String,
     displayDate: String,
     searchResults: List<SearchResult>,
-    onSearch: () -> Unit
+    onSearch: () -> Unit,
+    onClose: () -> Unit
 ) {
     StatusBarForegroundColor(isLight = true)
     Column(
@@ -108,7 +109,8 @@ private fun SearchScreenUi(
                 hint = "Enter your city name",
                 text = search,
                 onTextChange = onSearchTextChange,
-                onIme = onSearch
+                onIme = onSearch,
+                onClose = onClose
             )
             SpacerXS()
             SearchResultView(results = searchResults)
@@ -122,45 +124,6 @@ private fun SearchScreenUi(
         ) {
 
         }
-    }
-}
-
-@Composable
-fun SearchResultView(results: List<SearchResult>) {
-    LazyColumn {
-        items(results, key = { it.id }) {
-            SearchResultItem(it, onClick = {})
-        }
-    }
-}
-
-@Composable
-fun SearchResultItem(result: SearchResult, onClick: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 2.dp)
-            .background(MyColor.bgTertiaryMuted, MyShape.round)
-            .border(0.85.dp, MyColor.bgPrimary.copy(0.10f), MyShape.round)
-            .clip(MyShape.round)
-            .clickable { onClick() }
-            .padding(horizontal = Paddings.xSmall, vertical = Paddings.xxSmall),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            modifier = Modifier,
-            text = "${result.name}, ${result.country}, ${result.region}",
-            style = MyTypography.SB14,
-            color = MyColor.bgPrimary
-        )
-        SpacerXS()
-        SpacerMax()
-        Icon(
-            modifier = Modifier.size(24.dp),
-            tint = MyColor.bgPrimary,
-            painter = painterResource(id = R.drawable.ic_pin),
-            contentDescription = ""
-        )
     }
 }
 

@@ -25,11 +25,15 @@ class SearchViewModel
         _uiState.update { it.copy(isLoading = false, error = null) }
         val response = searchUseCase.search(_uiState.value.search)
         response.onSuccess { data ->
-            _uiState.update { it.copy(isLoading = false, searchResults = data, search = "") }
+            _uiState.update { it.copy(isLoading = false, searchResults = data) }
         }
         response.onFailure { error ->
             _uiState.update { it.copy(isLoading = false, error = error.message) }
         }
+    }
+
+    fun clearSearch() = _uiState.update {
+        it.copy(search = "", searchResults = listOf())
     }
 
     fun getCurrentCity(location: Location) = viewModelScope.launch {
