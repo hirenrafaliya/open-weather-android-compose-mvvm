@@ -23,21 +23,21 @@ import com.application.base.theme.MyColor
 import com.application.base.theme.MyShape
 import com.application.base.theme.MyTypography
 import com.application.base.theme.Paddings
-import com.application.domain.model.SearchResult
+import com.application.domain.model.Location
 import com.application.home.R
 
 
 @Composable
-fun SearchResultView(results: List<SearchResult>) {
+fun SearchResultView(results: List<Location>, onPin: (Location) -> Unit) {
     LazyColumn {
         items(results, key = { it.id }) {
-            SearchResultItem(it, onClick = {})
+            SearchResultItem(it, onClick = {onPin(it)})
         }
     }
 }
 
 @Composable
-fun SearchResultItem(result: SearchResult, onClick: () -> Unit) {
+fun SearchResultItem(result: Location, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()

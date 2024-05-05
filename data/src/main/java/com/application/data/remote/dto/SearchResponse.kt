@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Search (
+data class SearchResult (
     @SerialName("id") var id : Int,
     @SerialName("name") var name : String,
     @SerialName("region") var region : String,

@@ -1,8 +1,9 @@
 package com.application.data.repository
 
 import com.application.data.remote.Endpoint
+import com.application.data.remote.dto.CurrentWeatherResponse
 import com.application.data.remote.dto.OpenStreetResponse
-import com.application.data.remote.dto.Search
+import com.application.data.remote.dto.SearchResult
 import com.application.data.util.addApiKey
 import com.application.data.util.handleBody
 import io.ktor.client.HttpClient
@@ -17,7 +18,7 @@ class SearchRepository
         client.get(Endpoint.SEARCH) {
             parameter("q", location)
             addApiKey()
-        }.handleBody<List<Search>>()
+        }.handleBody<List<SearchResult>>()
 
     suspend fun getCity(lat: String, lng: String) =
         client.get(Endpoint.GET_CITY) {
@@ -25,4 +26,10 @@ class SearchRepository
             parameter("lon", lng)
             addApiKey()
         }.handleBody<OpenStreetResponse>()
+
+    suspend fun getCurrentWeather(location: String) =
+        client.get(Endpoint.CURRENT_WEATHER) {
+            parameter("q", location)
+            addApiKey()
+        }.handleBody<CurrentWeatherResponse>()
 }

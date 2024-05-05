@@ -1,10 +1,8 @@
 package com.application.search
 
-import android.location.Location
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.application.domain.usecase.SearchUseCase
-import com.application.domain.usecase.WeatherUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,7 +34,24 @@ class SearchViewModel
         it.copy(search = "", searchResults = listOf())
     }
 
-    fun getCurrentCity(location: Location) = viewModelScope.launch {
+    fun pinLocation(location: com.application.domain.model.Location) = viewModelScope.launch {
+        _uiState.update { it.copy(isLoading = false, error = null) }
+        val response = searchUseCase.getCurrentWeather(location.url)
+        response.onSuccess { data ->
+            _uiState.update {
+                it.copy(
+                    isLoading = false,
+                    pinnedLocations = _uiState.value.pinnedLocations.toMutableList().apply {
+                        add(data)
+                    })
+            }
+        }
+        response.onFailure { error ->
+            _uiState.update { it.copy(isLoading = false, error = error.message) }
+        }
+    }
+
+    fun getCurrentCity(location: android.location.Location) = viewModelScope.launch {
         _uiState.update { it.copy(isLoading = false, error = null) }
         val response = searchUseCase.getCity(location)
         response.onSuccess { data ->
