@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "OpenWeather"
 include(":app")
+include(":data")
