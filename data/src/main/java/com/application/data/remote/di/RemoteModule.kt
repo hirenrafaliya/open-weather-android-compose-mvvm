@@ -2,21 +2,29 @@ package com.application.data.remote.di
 
 import android.util.Log
 import com.application.data.remote.Endpoint
+import com.application.data.util.SecretKeys
+import com.application.data.util.SecretManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
+import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.observer.ResponseObserver
 import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.request.HttpSendPipeline
+import io.ktor.client.request.url
 import io.ktor.http.ContentType
+import io.ktor.http.URLBuilder
 import io.ktor.http.URLProtocol
 import io.ktor.http.contentType
+import io.ktor.http.parametersOf
+import io.ktor.http.set
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -60,6 +68,7 @@ class RemoteModule {
                 }
                 level = LogLevel.BODY
             }
+
 
             defaultRequest {
 
