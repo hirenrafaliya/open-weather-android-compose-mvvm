@@ -62,7 +62,7 @@ android {
 dependencies {
 
     implementation(project(":presentation:base"))
-    implementation(project(":presentation:home"))
+    implementation(project(":presentation:screen"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
