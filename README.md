@@ -35,3 +35,5 @@ An android weather app developed using Jetpack compose and uses [weatherapi.com]
   <img src="https://github.com/hirenrafaliya/open-weather-android-compose-mvvm/blob/dev/assets/Screenshot_20240506_023011.png?raw=true" width="200" />
   <img src="https://github.com/hirenrafaliya/open-weather-android-compose-mvvm/blob/dev/assets/Screenshot_20240506_023227.png?raw=true" width="200" />
 </p>
+
+https://github.com/hirenrafaliya/open-weather-android-compose-mvvm/assets/53972396/4d5a4c3e-8d1d-46d9-ba9d-719cf498065e
